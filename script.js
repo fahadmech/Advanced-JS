@@ -75,9 +75,40 @@ console.log(jane);
 
 //Primitives vs Objects
 
+//Primitives
 var a = 54;
 var b = a;
 a = 45;
 console.log(a); //45
 console.log(b); //54
 //when a primitiveis stored in a variable it stores its copy.
+
+//objects
+var obj1 = {
+  name: "john",
+  age: 26
+};
+
+var obj2 = obj1;
+
+obj1.age = 40;
+
+console.log(obj1.age); //40
+console.log(obj2.age); //40
+//refer notes
+
+//Functions
+var age = 30;
+
+var obj = {
+  name: "fahad",
+  city: "mumbai"
+};
+
+function change(a, b) {
+  a = 26;
+  b.city = "america";
+}
+
+change(age, obj);
+console.log(age, obj.city);
