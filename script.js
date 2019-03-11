@@ -1,4 +1,8 @@
-/*//Function Constructor
+/*==================================
+// Function Constructor
+==================================*/
+
+/*
 var Person = function(name, yearOfBirth, job) {
   this.name = name;
   this.yearOfBirth = yearOfBirth;
@@ -49,7 +53,9 @@ console.log(sachin, ganguly);
 sachin.Average();
 ganguly.Average();*/
 
-//object.create method
+/*==================================
+// object.create method
+==================================*/
 
 //first we have to create the prototype as simple object
 /*var personProto = {
@@ -73,10 +79,15 @@ var jane = Object.create(personProto, {
 });
 console.log(jane);
 
-//Primitives vs Objects
+
+
+
+/*==================================
+// Primitives vs Objects
+==================================*/
 
 //Primitives
-var a = 54;
+/*var a = 54;
 var b = a;
 a = 45;
 console.log(a); //45
@@ -113,7 +124,9 @@ function change(a, b) {
 change(age, obj);
 console.log(age, obj.city);*/
 
-//Passing Functions as arguments
+/*==================================
+// Passing Functions as arguments
+==================================*/
 
 /*var years = [1990, 1965, 1937, 2005, 1998];
 
@@ -153,7 +166,10 @@ console.log(fullAges);
 var heratRates = arrayCalc(ages, maxHeartRate);
 console.log(heratRates);*/
 
-//functions returning functions
+/*==================================
+// functions returning functions
+==================================*/
+
 /*function interviewQuestion(job) {
   if (job === "designer") {
     return function(name) {
@@ -183,8 +199,11 @@ designerQuestion("sagar");
 // Another way of doing it without assigning function in variable;
 interviewQuestion("teacher")("monu");*/
 
+/*=============================================
 // IIFE Immediately Invoked Function Expression.
-// want to build game but hide the score (Refer the Notes)
+==============================================*/
+
+/*// want to build game but hide the score (Refer the Notes)
 // Normal way of doing it :-
 function game() {
   var score = Math.random() * 10;
@@ -205,9 +224,13 @@ game();
   var score = Math.random() * 10;
   console.log(score >= 5 - goodluck);
 })(5); //always true because score will always be greater than zero.
+*/
 
-//Closures
+/*==================================
+// Closures
+==================================*/
 
+/*
 function interviewQuestion(job) {
   var a = "can you expalin what UX design is?";
   var b = "which subject do you teach?";
@@ -250,3 +273,93 @@ retirementGermany(1990);
 retirementIceland(1990);
 
 // retirement(66)(1990);
+*/
+
+/*==================================
+// Call, Bind, Apply
+==================================*/
+
+var john = {
+  name: "john",
+  age: 26,
+  job: "teacher",
+  presentation: function(style, timeOfDay) {
+    if (style === "formal") {
+      console.log(
+        "Good " +
+          timeOfDay +
+          ", Ladies and Gentlemen! I'am " +
+          this.name +
+          ", I'am a " +
+          this.job +
+          ", and I'am " +
+          this.age +
+          " Years old."
+      );
+    } else if (style === "friendly") {
+      console.log(
+        "Hey what's up? I'am " +
+          this.name +
+          ", I'am a " +
+          this.job +
+          ", and I'am " +
+          this.age +
+          " Years old." +
+          " Have a nice " +
+          timeOfDay +
+          "."
+      );
+    }
+  }
+};
+
+var emily = {
+  name: "emily",
+  age: 35,
+  job: "designer"
+};
+
+john.presentation("formal", "morning");
+
+// using call Method
+john.presentation.call(emily, "friendly", "afternoon");
+
+// using apply method
+// john.presentation.apply(emily, ["friendly", "afternoon"]);
+
+// using bind method
+var johnFriendly = john.presentation.bind(john, "friendly");
+
+johnFriendly("morning");
+johnFriendly("night");
+
+var emilyFormal = john.presentation.bind(emily, "formal");
+emilyFormal("night");
+
+// some real world examples
+
+var years = [1990, 1965, 1937, 2005, 1998];
+
+function arrayCalc(arr, fn) {
+  var arrResult = [];
+  for (var i = 0; i < arr.length; i++) {
+    arrResult.push(fn(arr[i]));
+  }
+  return arrResult;
+}
+
+//functionto calculate ages
+function calcAge(el) {
+  return 2016 - el;
+}
+
+//function to know is the person is of full age
+function isFullAge(limit, el) {
+  return el >= limit;
+}
+
+var ages = arrayCalc(years, calcAge);
+console.log(ages);
+
+var fullAgesJapan = arrayCalc(ages, isFullAge.bind(this, 20));
+console.log(fullAgesJapan);
