@@ -278,7 +278,7 @@ retirementIceland(1990);
 /*==================================
 // Call, Bind, Apply
 ==================================*/
-
+/*
 var john = {
   name: "john",
   age: 26,
@@ -363,3 +363,144 @@ console.log(ages);
 
 var fullAgesJapan = arrayCalc(ages, isFullAge.bind(this, 20));
 console.log(fullAgesJapan);
+*/
+
+/*==================================
+// Coding Challenge No 7.
+==================================*/
+// Part 1
+/*
+(function() {
+  var Qestion = function(question, answers, correct) {
+    this.question = question;
+    this.answers = answers;
+    this.correct = correct;
+  };
+
+  Qestion.prototype.displayQuestion = function() {
+    console.log(this.question);
+
+    for (var i = 0; i < this.answers.length; i++) {
+      console.log(i + ": " + this.answers[i]);
+    }
+  };
+
+  Qestion.prototype.checkAnswer = function(ans) {
+    if (ans === this.correct) {
+      console.log("Correct Answer!!!");
+    } else {
+      console.log("Wrong answer please try again");
+    }
+  };
+
+  var q1 = new Qestion(
+    "Is JavaScript the coolest programming language in the world?",
+    ["Yes", "No"],
+    0
+  );
+
+  var q2 = new Qestion(
+    "What is the name of this course's teacher?",
+    ["John", "Michael", "Jonas"],
+    2
+  );
+
+  var q3 = new Qestion(
+    "What does best describe coding?",
+    ["Boring", "Hard", "Fun", "Tedious"],
+    2
+  );
+
+  var questions = [q1, q2, q3];
+
+  var n = Math.floor(Math.random() * questions.length);
+
+  questions[n].displayQuestion();
+
+  var answer = parseInt(prompt("Please select the correct answer"));
+
+  questions[n].checkAnswer(answer);
+})();
+*/
+
+//Part 2
+
+(function() {
+  var Qestion = function(question, answers, correct) {
+    this.question = question;
+    this.answers = answers;
+    this.correct = correct;
+  };
+
+  Qestion.prototype.displayQuestion = function() {
+    console.log(this.question);
+
+    for (var i = 0; i < this.answers.length; i++) {
+      console.log(i + ": " + this.answers[i]);
+    }
+  };
+
+  Qestion.prototype.checkAnswer = function(ans, callback) {
+    var sc;
+    if (ans === this.correct) {
+      console.log("Correct Answer!!!");
+      sc = callback(true);
+    } else {
+      console.log("Wrong answer please try again");
+      sc = callback(false);
+    }
+    this.displayScore(sc);
+  };
+
+  Qestion.prototype.displayScore = function(score) {
+    console.log("your current score is: " + score);
+    console.log("-------------------------------------");
+  };
+
+  var q1 = new Qestion(
+    "Is JavaScript the coolest programming language in the world?",
+    ["Yes", "No"],
+    0
+  );
+
+  var q2 = new Qestion(
+    "What is the name of this course's teacher?",
+    ["John", "Michael", "Jonas"],
+    2
+  );
+
+  var q3 = new Qestion(
+    "What does best describe coding?",
+    ["Boring", "Hard", "Fun", "Tedious"],
+    2
+  );
+
+  var questions = [q1, q2, q3];
+
+  function score() {
+    var scr = 0;
+    return function(correct) {
+      if (correct) {
+        scr++;
+      }
+      return scr;
+    };
+  }
+
+  var keepScore = score();
+
+  function nextQuestion() {
+    var n = Math.floor(Math.random() * questions.length);
+
+    questions[n].displayQuestion();
+
+    var answer = prompt("Please select the correct answer");
+
+    if (answer !== "exit") {
+      questions[n].checkAnswer(parseInt(answer), keepScore);
+
+      nextQuestion();
+    }
+  }
+  nextQuestion();
+})();
